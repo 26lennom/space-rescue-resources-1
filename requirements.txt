@@ -1,1 +1,8 @@
 pygame.
+
+screen_width = 1280
+screen_height = 880
+
+#set up window display
+window_name = "Space Rescue"
+
