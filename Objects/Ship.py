@@ -1,4 +1,5 @@
 from GameFrame import RoomObject, Globals
+from Objects.Laser import Laser
 import pygame
 
 class Ship(RoomObject):
@@ -8,10 +9,12 @@ class Ship(RoomObject):
 
         RoomObject.__init__(self, room, x, y)
 
-        image = self.load_room(Ship.png)
+        image = self.load_image("Ship.png")
         self.set_image(image,100,100)
 
         self.handle_key_events = True
+
+        self.can_shoot = True
 
     def key_pressed(self, key):
         
@@ -19,6 +22,9 @@ class Ship(RoomObject):
             self.y_speed -= 10
         elif key[pygame.K_s]:
             self.y_speed += 10
+        if key[pygame.K_SPACE]:
+            self.shoot_laser()
+
 
 
     def keep_in_room(self):
@@ -30,3 +36,17 @@ class Ship(RoomObject):
 
     def step(self):
         self.keep_in_room()
+
+    
+    def shoot_laser(self):
+        if self.can_shoot:
+            new_laser = Laser(self.room, 
+                               self.x + self.width, 
+                                self.y + self.height/2 - 4)
+            self.room.add_room_object(new_laser)
+            self.can_shoot = False
+            self.set_timer(10,self.reset_shot)
+
+
+    
+    
