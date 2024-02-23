@@ -1,6 +1,6 @@
 from GameFrame import RoomObject, Globals
 
-class Laser(roomObject):
+class Laser(RoomObject):
 
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
@@ -10,11 +10,22 @@ class Laser(roomObject):
 
         self.set_direction(0, 20)
 
+        self.register_collision_object("Asteroid")
+        self.register_collision_object("Astronaut")
+
     def step(self):
-        self.outside_of_room()
+        self.Outside_of_room()
 
     def Outside_of_room(self):
 
         if self.x > Globals.SCREEN_WIDTH:
             self.room.delete_object(self)
+
+
+    def handle_collision(self, other, other_type):
+
+        if other_type == "Asteroid":
+            self.room.delete_object(other)
+        elif other_type == "Astronaut":
+            self.room.delete_object(other)
 

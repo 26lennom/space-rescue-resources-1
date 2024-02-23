@@ -1,6 +1,7 @@
 from GameFrame import RoomObject, Globals
 from Objects.Asteroid import Asteroid
 import random
+from Objects.Astronaut import Astronaut
 
 class Zork(RoomObject):
     def __init__(self, room, x, y):
@@ -13,6 +14,9 @@ class Zork(RoomObject):
 
         asteriod_spawn_time = random.randint(15, 150)
         self.set_timer(asteriod_spawn_time, self.spawn_asteroid)
+
+        astronaut_spawn_time = random.randint(30, 200)
+        self.set_timer(astronaut_spawn_time, self.spawn_astronaut)
 
     def keep_in_room(self):
         if self.y< 0 or self.y > Globals.SCREEN_HEIGHT - self.height:
@@ -29,3 +33,14 @@ class Zork(RoomObject):
         # reset time for next Asteroid spawn
         asteroid_spawn_time = random.randint(15, 150)
         self.set_timer(asteroid_spawn_time, self.spawn_asteroid)
+
+
+    def spawn_astronaut(self):
+        
+        # spawn astronaut and add to room
+        new_astronaut = Astronaut(self.room, self.x, self.y + self.height/2)
+        self.room.add_room_object(new_astronaut)
+        
+        # reset timer for next astronaut spawn
+        astronaut_spawn_time = random.randint(30, 200)
+        self.set_timer(astronaut_spawn_time, self.spawn_astronaut)
