@@ -36,6 +36,7 @@ class Asteroid(RoomObject):
     def handle_collision(self, other, other_type):
 
         if other_type == "Ship":
+            self.room.asteroid_collision.play()
             self.room.delete_object(self)
             Globals.LIVES -= 1
             if Globals.LIVES > 0:
