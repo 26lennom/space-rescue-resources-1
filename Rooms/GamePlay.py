@@ -1,4 +1,4 @@
-from GameFrame import Level
+from GameFrame import Level, Globals
 from Objects.Ship import Ship
 from Objects.Zork import Zork
 from Objects.Hub import Score, Lives
